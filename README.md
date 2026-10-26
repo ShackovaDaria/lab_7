@@ -24,21 +24,25 @@
 3. Возвращаем полученное значение площади обратно в функцию `main`.
 4. **Конец**.
 ### Блок-схема
-тут блоксхему нада
+<img width="1913" height="1269" alt="дз7 drawio" src="https://github.com/user-attachments/assets/41d47d6d-c8bf-49f5-a4e9-681448615752" />
+
 
 ## 2. Реализация программы
 
 ```c
 #include <stdio.h>
 #include <locale.h>
-#include <math.h>
+
+float s_tri(float a, float h);
+float s_sq(float a);
+float s_circ(float r);
+float s_rect(float a, float b);
 
 int main()
 {
     char fig;
     float a, b, h, r, s;
 
-    // Устанавливаем локаль для поддержки русского языка
     setlocale(LC_ALL, ".UTF8");
 
     printf("Введите фигуру (t - треугольник, s - квадрат, o - круг, r - прямоугольник): ");
@@ -49,32 +53,68 @@ int main()
         case 't':
             printf("Введите основание и высоту: ");
             scanf("%f %f", &a, &h);
-            s = 0.5 * a * h;
+            if (a <= 0 || h <= 0) {
+                printf("Ошибка: размеры должны быть положительными\n");
+                return 0;
+            }
+            s = s_tri(a, h);
             printf("Площадь треугольника: %.2f\n", s);
             break;
+
         case 's':
             printf("Введите сторону: ");
             scanf("%f", &a);
-            s = a * a;
+            if (a <= 0) {
+                printf("Ошибка: сторона должна быть положительной\n");
+                return 0;
+            }
+            s = s_sq(a);
             printf("Площадь квадрата: %.2f\n", s);
             break;
+
         case 'o':
             printf("Введите радиус: ");
             scanf("%f", &r);
-            s = 3.14159265 * r * r;
+            if (r <= 0) {
+                printf("Ошибка: радиус должен быть положительным\n");
+                return 0;
+            }
+            s = s_circ(r);
             printf("Площадь круга: %.2f\n", s);
             break;
+
         case 'r':
             printf("Введите длину и ширину: ");
             scanf("%f %f", &a, &b);
-            s = a * b;
+            if (a <= 0 || b <= 0) {
+                printf("Ошибка: размеры должны быть положительными\n");
+                return 0;
+            }
+            s = s_rect(a, b);
             printf("Площадь прямоугольника: %.2f\n", s);
             break;
+
         default:
             printf("Ошибка: неизвестная фигура\n");
             break;
     }
     return 0;
+}
+
+float s_tri(float a, float h) {
+    return 0.5f * a * h;
+}
+
+float s_sq(float a) {
+    return a * a;
+}
+
+float s_circ(float r) {
+    return 3.14159265f * r * r;
+}
+
+float s_rect(float a, float b) {
+    return a * b;
 }
 ```
 ## 3. Результаты работы программы
